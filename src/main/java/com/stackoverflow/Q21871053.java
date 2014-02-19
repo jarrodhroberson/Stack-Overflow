@@ -31,7 +31,9 @@ public class Q21871053
 
         for (final Integer i : counter.keySet())
         {
-            System.out.format("%d occurs %s time\n", i, counter.get(i));
+            final AtomicInteger integer = counter.get(i);
+            final String format = integer.get() > 1 ? "%d occurs %s times\n" : "%d occurs %s time\n";
+            System.out.format(format, i, integer);
         }
     }
 }
