@@ -6,7 +6,6 @@ import java.util.UUID;
 
 public class Q23633894
 {
-
     public static class Person
     {
         private final String firstName;
