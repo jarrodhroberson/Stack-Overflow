@@ -2,7 +2,7 @@ package com.stackoverflow;
 
 import javax.annotation.Nonnull;
 
-public class Q23726363
+public class Q23726363A
 {
     public static void main(final String[] args)
     {
