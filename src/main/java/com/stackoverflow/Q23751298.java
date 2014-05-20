@@ -12,7 +12,8 @@ public class Q23751298
     {
         try
         {
-            final BufferedImage img = ImageIO.read(new File("/Users/jhr/Pictures/fu4FM.gif"));
+            //final BufferedImage img = ImageIO.read(new File("/Users/jhr/Pictures/fu4FM.gif"));
+            final BufferedImage img = ImageIO.read(Q23751298.class.getResource("/fu4FM.gif"));
             final int match = new Color(209, 167, 86).getRGB();
 
             for (int x = 0; x < img.getWidth(); x++)
