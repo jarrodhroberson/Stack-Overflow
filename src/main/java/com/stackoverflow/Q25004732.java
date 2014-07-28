@@ -32,7 +32,7 @@ public class Q25004732
             }
         }
 
-        if (is.contains(13))
+        if (is.contains(input))
         {
             System.out.format("Found %d in the set %s", input, is);
         }
