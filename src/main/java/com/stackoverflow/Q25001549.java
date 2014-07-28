@@ -2,6 +2,12 @@ package com.stackoverflow;
 
 import java.util.Random;
 
+/**
+ * This is a very naive proof of concept for creating a "rolling checksum" type identifier.
+ * The first two characters are subtracted to get the third character which is the distance between the first two.
+ * This is fast but error prone, in that incorrect characters are can be detected and corrected but
+ * transpositions of the first two characters are not detected.
+ */
 public class Q25001549
 {
     private static final Random RND;
