@@ -11,7 +11,6 @@ public class Q25001549
         RND = new Random();
     }
 
-
     private static char randomCharacter()
     {
         return (char)(RND.nextInt(26) + 'a');
