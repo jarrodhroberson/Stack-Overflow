@@ -7,6 +7,10 @@ import java.util.Random;
  * The first two characters are subtracted to get the third character which is the distance between the first two.
  * This is fast but error prone, in that incorrect characters are can be detected and corrected but
  * transpositions of the first two characters are not detected.
+ *
+ * This just a straw man on how one might go about creating a "rolling checksum" self correcting string.
+ * Being able to detect transpositions would create a fairly robust error correcting code, at the expense of
+ * inflating the data 33%. But the checksum is part of the data at that point, so it isn't really a negative.
  */
 public class Q25001549
 {
@@ -22,6 +26,12 @@ public class Q25001549
         return (char)(RND.nextInt(26) + 'a');
     }
 
+    private static char checksum(char a, char b)
+    {
+        final int d = a - b;
+        return (char) (Math.abs(d) + (d < 0 ? 'a' : 'A'));
+    }
+
     public static void main(final String[] args)
     {
         final StringBuilder sb = new StringBuilder(9);
@@ -29,7 +39,7 @@ public class Q25001549
         {
             final char a = randomCharacter();
             final char b = randomCharacter();
-            final char c = (char)(Math.abs(a - b) + 'a');
+            final char c = checksum(a, b);
             System.out.println("a = " + (int)a);
             System.out.println("b = " + (int)b);
             System.out.println("c = " + (int)c);
@@ -37,19 +47,27 @@ public class Q25001549
             System.out.println();
         }
         System.out.println("sb.toString() = " + sb.toString());
+        final String s = sb.toString();
+        verify(sb);
+        sb.setCharAt(1,'x');
+        verify(sb);
+    }
+
+    private static void verify(final StringBuilder sb)
+    {
         for (int i=0; i < sb.length(); i += 3)
         {
             final char a = sb.charAt(i);
             final char b = sb.charAt(i+1);
             final char c = sb.charAt(i+2);
-            final char x = (char)(Math.abs(a - b) + 'a');
+            final char x = checksum(a, b);
             if (x==c)
             {
-                System.out.format("%s%s%s:", a, b, c);
+                System.out.format("%s%s%s", a, b, c);
             }
             else
             {
-                System.out.format("\n%s != %s", x, c);
+                System.out.format("\n%s != %s", x, sb.charAt(i));
             }
         }
     }
