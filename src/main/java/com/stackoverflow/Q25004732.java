@@ -10,6 +10,7 @@ import com.google.common.collect.TreeRangeSet;
 
 public class Q25004732
 {
+    // regex demo and explanation http://regex101.com/r/yU2eT4/2
     private static final Pattern RANGE = Pattern.compile("(?i)^(?=[a-z]+-[a-z]+$|\\d+-\\d+$)([a-z\\d]+)-([a-z\\d]+)$");
 
     public static void main(final String[] args)
