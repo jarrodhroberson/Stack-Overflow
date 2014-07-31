@@ -33,6 +33,7 @@ public class Q25004732
         report("A", rs);
         report("XY", rs);
         report("c", rs);
+        report("42", rs);
     }
 
     private static void report(@Nonnull final String input, @Nonnull final RangeSet<String> rs)
