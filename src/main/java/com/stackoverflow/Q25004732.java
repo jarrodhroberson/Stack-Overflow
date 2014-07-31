@@ -15,23 +15,24 @@ public class Q25004732
     public static void main(final String[] args)
     {
         final String[] sa = "1,3,10-15,17,A,b,XX-ZZ,z".split(",");
-        final RangeSet<String> is = TreeRangeSet.create();
+        final RangeSet<String> rs = TreeRangeSet.create();
         for (final String s : sa)
         {
             System.out.println("s = " + s);
             final Matcher m = RANGE.matcher(s);
             if (m.find())
             {
-                is.add(Range.closed(m.group(1), m.group(2)));
+                rs.add(Range.closed(m.group(1), m.group(2)));
             }
             else
             {
-                is.add(Range.closed(s, s));
+                rs.add(Range.closed(s, s));
             }
         }
-        report("13", is);
-        report("A", is);
-        report("XY", is);
+        report("13", rs);
+        report("A", rs);
+        report("XY", rs);
+        report("c", rs);
     }
 
     private static void report(@Nonnull final String input, @Nonnull final RangeSet<String> rs)
