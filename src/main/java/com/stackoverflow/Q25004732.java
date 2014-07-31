@@ -19,7 +19,6 @@ public class Q25004732
         final RangeSet<String> rs = TreeRangeSet.create();
         for (final String s : sa)
         {
-            System.out.println("s = " + s);
             final Matcher m = RANGE.matcher(s);
             if (m.find())
             {
