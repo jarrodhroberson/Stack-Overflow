@@ -1,12 +1,12 @@
 package com.stackoverflow;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.vertigrated.FormattedRuntimeException;
 
 import javax.annotation.Nonnull;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +22,7 @@ public class Q26110375
         {
             final ObjectMapper m = new ObjectMapper();
             m.enable(SerializationFeature.INDENT_OUTPUT);
+            m.enable(SerializationFeature.WRAP_ROOT_VALUE);
             m.writeValue(System.out, account);
         }
         catch (final IOException e)
@@ -57,6 +58,7 @@ public class Q26110375
         }
     }
 
+    @JsonRootName("account")
     private static class Account
     {
         @JsonProperty
@@ -64,7 +66,7 @@ public class Q26110375
         @JsonProperty
         private final List<User> users;
 
-        private Account(@Nonnull final String description, @Nonnull final User ... users)
+        private Account(@Nonnull final String description, @Nonnull final User... users)
         {
             this.description = description;
             this.users = Arrays.asList(users);
