@@ -2,8 +2,6 @@ package com.stackoverflow;
 
 import javax.annotation.Nonnull;
 
-import com.google.common.reflect.TypeToken;
-
 public class Q26260792
 {
     private Double a = 42.0;
@@ -18,10 +16,8 @@ public class Q26260792
         System.out.println(q.add(new Float(1.3)));
     }
 
-    @SuppressWarnings("unchecked")
-    public <T extends Number> T add(@Nonnull final T n)
+    public <T extends Number> double add(@Nonnull final T n)
     {
-        final Class<T> entityType = (Class<T>) new TypeToken<T>(getClass()) {}.getRawType();
-        return entityType.cast(a + n.doubleValue());
+        return a + n.doubleValue();
     }
 }
