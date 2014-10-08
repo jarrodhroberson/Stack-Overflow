@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 public class Q26260792
 {
-    private Double a = 42.0;
+    private double a = 42.0;
 
     public static void main(final String[] args)
     {
