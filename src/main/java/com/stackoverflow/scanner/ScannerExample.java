@@ -18,22 +18,14 @@ public class ScannerExample
 
     static
     {
-        EXIT_COMMANDS = caseInsensitiveSet("exit", "done", "quit", "end", "fino");
-        HELP_COMMANDS = caseInsensitiveSet("help", "helpi", "?");
+        final SortedSet<String> ecmds = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+        ecmds.addAll(Arrays.asList("exit", "done", "quit", "end", "fino"));
+        EXIT_COMMANDS = Collections.unmodifiableSortedSet(ecmds);
+        final SortedSet<String> hcmds = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+        hcmds.addAll(Arrays.asList("help", "helpi", "?"));
+        HELP_COMMANDS = Collections.unmodifiableSet(hcmds);
         DATE_PATTERN = Pattern.compile("\\d{4}([-\\/])\\d{2}\\1\\d{2}"); // http://regex101.com/r/xB8dR3/1
         HELP_MESSAGE = format("Please enter some data or enter one of the following commands to exit %s", EXIT_COMMANDS);
-    }
-
-    private static Set<String> caseInsensitiveSet(@Nonnull final String... args)
-    {
-        return Collections.unmodifiableSortedSet(new TreeSet<String>(Arrays.asList(args))
-        {
-            @Override
-            public boolean add(final String s) { return super.add(s.toLowerCase()); }
-
-            @Override
-            public boolean contains(final Object o) { return super.contains(((String) o).toLowerCase()); }
-        });
     }
 
     /**
