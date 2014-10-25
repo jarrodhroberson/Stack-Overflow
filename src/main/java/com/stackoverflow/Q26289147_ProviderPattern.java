@@ -10,6 +10,10 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Unlike most of my exmamples this one requires JDK 7 or higher because of the use of <code>String</code>
+ * based <code>switch</code> statement.
+ */
 public class Q26289147_ProviderPattern
 {
     private static final List<String> CLASS_NAMES = ImmutableList.of("String", "Integer", "Boolean");
