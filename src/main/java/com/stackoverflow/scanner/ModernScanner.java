@@ -1,36 +1,30 @@
 package com.stackoverflow.scanner;
 
+import java.io.*;
+import java.nio.CharBuffer;
+import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicReference;
+import javax.annotation.Nonnull;
+
 import com.google.common.base.Charsets;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-
-import javax.annotation.Nonnull;
-import java.io.ByteArrayInputStream;
-import java.io.Closeable;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Iterator;
-import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicReference;
+import com.google.common.collect.PeekingIterator;
 
 public class ModernScanner implements Iterable<String>, Closeable
 {
-    private final InputStream is;
-    private final PredicateIterator<String> it;
-    private final AtomicReference<Character> as;
-
-    public ModernScanner(@Nonnull final CharSequence s)
-    {
-        this(new ByteArrayInputStream(s.toString().getBytes(Charsets.UTF_8)));
-    }
+    private final Reader br;
+    private final PredicateIterator<String> pit;
+    private final AtomicReference<Character> arc;
 
     public ModernScanner(@Nonnull final InputStream source)
     {
-        this.is = source;
-        this.as = new AtomicReference<Character>('\n');
-        this.it = new PredicateIterator<String>()
+        this.br = new BufferedReader(new InputStreamReader(source, Charsets.UTF_8));
+        this.arc = new AtomicReference<Character>('\n');
+        this.pit = new PredicateIterator<String>()
         {
-            final StringBuilder sb = new StringBuilder(1024);
+            private final StringBuilder sb = new StringBuilder(1024);
+            private final Reader br = ModernScanner.this.br;
 
             @Override
             public boolean hasNext()
@@ -43,19 +37,34 @@ public class ModernScanner implements Iterable<String>, Closeable
                 {
                     try
                     {
-                        int i;
-                        while ((i = is.read()) != ModernScanner.this.as.get())
+                        final CharBuffer cb = CharBuffer.allocate(1024);
+                        find:
+                        while (true)
                         {
-                            sb.append((char) i);
+                            this.br.mark(0);
+                            while (this.br.read(cb) != -1)
+                            {
+                                for (int i = 0; i < cb.length(); i++)
+                                {
+                                    final char c = cb.charAt(i);
+                                    if (c == ModernScanner.this.arc.get())
+                                    {
+                                        this.sb.append(cb.flip());
+                                        this.br.reset();
+                                        this.br.skip(i + 1);
+                                        break find;
+                                    }
+                                }
+                            }
                         }
-                        return sb.length() > 0;
+                        return true;
                     }
                     catch (final IOException e)
                     {
                         sb.delete(0, sb.length());
                         try
                         {
-                            is.close();
+                            this.br.close();
                             return false;
                         }
                         catch (final IOException ce) { return false; }
@@ -63,12 +72,19 @@ public class ModernScanner implements Iterable<String>, Closeable
                 }
             }
 
+            @Override
+            public String peek()
+            {
+                return sb.toString();
+            }
+
             @Nonnull
             @Override
             public String next()
             {
-                final String next = sb.toString();
-                sb.delete(0, sb.length());
+                final String next = this.sb.toString();
+                this.sb.delete(0, next.length());
+                sb.ensureCapacity(1024);
                 return next;
             }
 
@@ -76,57 +92,53 @@ public class ModernScanner implements Iterable<String>, Closeable
             public void remove() { throw new UnsupportedOperationException(); }
 
             @Override
-            public boolean hasNext(@Nonnull final Predicate<String> p)
-            {
-                return this.hasNext() && p.apply(sb.toString());
-            }
+            public <N> boolean hasNext(@Nonnull final NextStrategy<N> s) { return this.hasNext() && s.is(sb.toString()); }
 
-            @Nonnull
             @Override
-            public <N> N next(@Nonnull final Function<String, N> function)
-            {
-                return function.apply(this.next());
-            }
+            public <N> N next(@Nonnull final NextStrategy<N> s) { return s.of(this.next()); }
         };
     }
 
     @Nonnull
-    public Character getDelimiter() { return this.as.get(); }
+    public Character getDelimiter() { return this.arc.get(); }
 
-    public void setDelimiter(@Nonnull final Character c) { this.as.set(c); }
+    public void setDelimiter(@Nonnull final Character c) { this.arc.set(c); }
 
     @Override
-    public void close() throws IOException { is.close(); }
+    public void close() throws IOException { br.close(); }
 
     @Nonnull
     public PredicateIterator<String> predicateIterator()
     {
-        return this.it;
+        return this.pit;
     }
 
     @Override
-    public Iterator<String> iterator() { return this.it; }
+    public Iterator<String> iterator() { return this.pit; }
 
-    public static interface PredicateIterator<String> extends Iterator<String>
+    public interface PredicateIterator<String> extends Iterator<String>, PeekingIterator<String>
     {
-        public boolean hasNext(@Nonnull final Predicate<String> p);
+        public <N> boolean hasNext(@Nonnull final NextStrategy<N> s);
 
-        public <N> N next(@Nonnull final Function<String, N> function);
+        public <N> N next(@Nonnull final NextStrategy<N> s);
+
+        @Override
+        public String peek();
     }
 
     public class NextStrategy<T>
     {
         private final Predicate<String> p;
-        private final Function<String,T> f;
+        private final Function<String, T> f;
 
-        public NextStrategy(@Nonnull final Predicate<String> p, @Nonnull final Function<String, T> f)
+        public NextStrategy(@Nonnull final Predicate<java.lang.String> p, @Nonnull final Function<java.lang.String, T> f)
         {
             this.p = p;
             this.f = f;
         }
 
-        private boolean isNext() { return ModernScanner.this.it.hasNext(this.p);}
+        public boolean is(@Nonnull final String s) { return this.p.apply(s); }
 
-        private T next() { return ModernScanner.this.it.next(this.f); }
+        public T of(@Nonnull final String s) { return this.f.apply(s); }
     }
 }

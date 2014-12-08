@@ -20,6 +20,11 @@ public class FormattedRuntimeException extends RuntimeException
         super(String.format(format, args), cause);
     }
 
+    public FormattedRuntimeException(@Nonnull final String message, @Nonnull final Throwable cause)
+    {
+        super(message, cause);
+    }
+
     /**
      * This no-arg constructor is hidden specifically to keep people from using it
      */
