@@ -10,15 +10,18 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.PeekingIterator;
+import com.vertigrated.FormattedRuntimeException;
 
 public class ModernScanner implements Iterable<String>, Closeable
 {
+    private final boolean isSystemIn;
     private final Reader br;
     private final PredicateIterator<String> pit;
     private final AtomicReference<Character> arc;
 
     public ModernScanner(@Nonnull final InputStream source)
     {
+        this.isSystemIn = source == System.in;
         this.br = new BufferedReader(new InputStreamReader(source, Charsets.UTF_8));
         this.arc = new AtomicReference<Character>('\n');
         this.pit = new PredicateIterator<String>()
@@ -105,7 +108,17 @@ public class ModernScanner implements Iterable<String>, Closeable
     public void setDelimiter(@Nonnull final Character c) { this.arc.set(c); }
 
     @Override
-    public void close() throws IOException { br.close(); }
+    public void close() throws IOException
+    {
+        if (this.isSystemIn)
+        {
+            throw new FormattedRuntimeException("Backing InputStream is 'System.in'.\nClosing 'System.in' is a bad idea!\nIf this is what you really want to do you should catch this exception and deal with it.");
+        }
+        else
+        {
+            br.close();
+        }
+    }
 
     @Nonnull
     public PredicateIterator<String> predicateIterator()
