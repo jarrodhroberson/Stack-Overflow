@@ -1,9 +1,11 @@
 package com.stackoverflow.scanner;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestModernScanner
 {
+    @Ignore
     @Test
     public void testSystemIn() throws Exception
     {
