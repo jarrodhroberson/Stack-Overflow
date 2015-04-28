@@ -14,15 +14,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.glassfish</groupId>
-                <artifactId>javax.el</artifactId>
-                <version>3.0.0</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <scm>
+        <url>https://github.com/jarrodhroberson/Stack-Overflow</url>
+        <connection>https://github.com/jarrodhroberson/Stack-Overflow.git</connection>
+        <developerConnection>scm:git:git@github.com:jarrodhroberson/Stack-Overflow.git</developerConnection>
+    </scm>
 
     <dependencies>
 

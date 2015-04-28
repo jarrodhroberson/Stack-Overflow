@@ -28,12 +28,10 @@ public class FormattedRuntimeException extends RuntimeException
     /**
      * This no-arg constructor is hidden specifically to keep people from using it
      */
-    private FormattedRuntimeException()
-    { /* keep people from using "anonymous" instances */ }
+    private FormattedRuntimeException() { /* keep people from using "anonymous" instances */ }
 
     /**
      * This Exception only constructor is hidden specifically to keep people from using it
      */
-    private FormattedRuntimeException(final Exception e)
-    { /* keep people from using "anonymous" instances */ }
+    private FormattedRuntimeException(final Exception e) { /* keep people from using "anonymous" instances */ }
 }
