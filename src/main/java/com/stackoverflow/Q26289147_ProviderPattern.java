@@ -44,7 +44,7 @@ public class Q26289147_ProviderPattern
                     imb.put(cn, new Provider<StrawManParameterizedClass>()
                     {
                         @Override
-                        public StrawManParameterizedClass<Integer> get() { return new StrawManParameterizedClass<Integer>() {}; }
+                        public StrawManParameterizedClass<Boolean> get() { return new StrawManParameterizedClass<Boolean>() {}; }
                     });
                     break;
                 default:
