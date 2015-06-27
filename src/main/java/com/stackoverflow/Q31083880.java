@@ -48,14 +48,8 @@ public class Q31083880
             method.invoke(cl, f.toURI().toURL());
             listClassPathRoots();
             final Method m;
-            try
-            {
-                m = Class.forName(name).getMethod("main", String[].class);
-            }
-            catch (ClassNotFoundException e)
-            {
-                throw new RuntimeException(e);
-            }
+            try { m = Class.forName(name).getMethod("main", String[].class); }
+            catch (ClassNotFoundException e) { throw new RuntimeException(e); }
             final String[] args = new String[0];
             m.invoke(null, new Object[]{args});
         }
@@ -76,16 +70,13 @@ public class Q31083880
                 final String source = "public class Test { public static void main(String[] args) { System.out.println(\"Testing\"); } }";
                 fw.write(source);
             }
-            catch (IOException e)
-            {
-                throw new RuntimeException(e);
-            }
+            catch (IOException e) { throw new RuntimeException(e); }
             finally
             {
                 try { fw.close(); } catch (final IOException e) { System.err.println(e.getMessage()); }
             }
-            System.out.println(compile(f));
-            invoke("Test");
+            if (compile(f) == 0) { invoke("Test"); }
+            else { throw new RuntimeException("compile failed!"); }
         }
         catch (IOException e)
         {
