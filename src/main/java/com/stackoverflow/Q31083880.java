@@ -42,8 +42,7 @@ public class Q31083880
         try
         {
             final URLClassLoader cl = (URLClassLoader) ClassLoader.getSystemClassLoader();
-            final Class<URLClassLoader> c = URLClassLoader.class;
-            final Method method = c.getDeclaredMethod("addURL", URL.class);
+            final Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
             method.setAccessible(true);
             final File f = new File(System.getProperty("user.home"));
             method.invoke(cl, f.toURI().toURL());
