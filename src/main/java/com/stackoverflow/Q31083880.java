@@ -31,10 +31,7 @@ public class Q31083880
                 System.out.println("roots.nextElement() = " + roots.nextElement());
             }
         }
-        catch (IOException e)
-        {
-            throw new RuntimeException(e);
-        }
+        catch (IOException e) { throw new RuntimeException(e); }
     }
 
     public static void invoke(@Nonnull final String name)
