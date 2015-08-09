@@ -30,8 +30,7 @@ public class Q6613429
                 @Override
                 public AssignItem permissionTo(@Nonnull String p) {
                     r.permission = p;
-                    return new AssignItem()
-                {
+                    return new AssignItem() {
                     @Override
                     public SetDate item(String i) {
                         r.item = i;
