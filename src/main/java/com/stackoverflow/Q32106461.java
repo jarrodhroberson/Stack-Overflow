@@ -33,7 +33,7 @@ public class Q32106461
         public String toString() { return format("Car{id='%s', description='%s', fee=%s}", id, description, fee); }
 
         @Override
-        public int hashCode() { return Objects.hash(id); }
+        public int hashCode() { return this.id.hashCode(); }
     }
 
     public static void main(final String[] args)
