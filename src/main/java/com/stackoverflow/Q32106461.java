@@ -1,5 +1,7 @@
 package com.stackoverflow;
 
+import com.google.common.base.Joiner;
+
 import javax.annotation.Nonnull;
 import java.io.PrintStream;
 import java.util.*;
@@ -22,9 +24,13 @@ public class Q32106461
         @Override
         public boolean equals(final Object o)
         {
-            if (this == o) { return true; } if (o == null || getClass() != o.getClass()) { return false; }
+            if (this == o) { return true; }
+            if (o == null || getClass() != o.getClass()) { return false; }
             final Car car = (Car) o; return Objects.equals(id, car.id);
         }
+
+        @Override
+        public String toString() { return format("Car{id='%s', description='%s', fee=%s}", id, description, fee); }
 
         @Override
         public int hashCode() { return Objects.hash(id, description, fee); }
@@ -62,9 +68,9 @@ public class Q32106461
             os.print("Continue? [Y/N]");
             if ("n".equalsIgnoreCase(ssi.next())) { break; }
         }
-        System.out.println("cars = " + cars);
-        System.out.println("carl = " + carl);
-        System.out.println("carm = " + carm);
+        System.out.println("cars = " + Joiner.on(',').join(cars));
+        System.out.println("carl = " + Joiner.on(',').join(carl));
+        System.out.println("carm = " + Joiner.on(',').withKeyValueSeparator(":").join(carm));
     }
 
     private static String getNextString(@Nonnull final String prompt, @Nonnull final PrintStream ps, @Nonnull final Scanner scanner)
