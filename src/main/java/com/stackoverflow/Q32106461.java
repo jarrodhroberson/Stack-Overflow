@@ -26,14 +26,14 @@ public class Q32106461
         {
             if (this == o) { return true; }
             if (o == null || getClass() != o.getClass()) { return false; }
-            final Car car = (Car) o; return Objects.equals(id, car.id);
+            final Car car = (Car) o; return Objects.equals(this.id, car.id);
         }
 
         @Override
         public String toString() { return format("Car{id='%s', description='%s', fee=%s}", id, description, fee); }
 
         @Override
-        public int hashCode() { return Objects.hash(id, description, fee); }
+        public int hashCode() { return Objects.hash(id); }
     }
 
     public static void main(final String[] args)
