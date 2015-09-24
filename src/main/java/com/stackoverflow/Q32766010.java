@@ -13,12 +13,10 @@ public class Q32766010
         public void doSomething(final int a, final int b)
         {
             class Closure {
-                void doThis() { System.out.println("a = " + a); }
-                void doThat() { System.out.println("b = " + b); }
+                Closure doThis() { System.out.println("a = " + a); return this; }
+                Closure doThat() { System.out.println("b = " + b); return this; }
             }
-            final Closure c = new Closure();
-            c.doThis();
-            c.doThat();
+            new Closure().doThis().doThat();
         }
     }
 }
