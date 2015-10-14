@@ -59,7 +59,6 @@ public class Q33114502
                 happy.add(-1);
             }
         }
-        System.out.println("happy = " + happy);
         final StringBuilder sb = new StringBuilder(60);
         final Iterator<Integer> ii = happy.iterator();
         while (ii.hasNext())
