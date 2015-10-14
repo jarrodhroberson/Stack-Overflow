@@ -43,10 +43,14 @@ public class Q33114502
         return i == 1 || i != 4 && isHappy(sum(square(toDigits(i))));
     }
 
+    private static int LINE_LENGTH = 50;
+    private static int NOT_HAPPY = -1;
+
     public static void main(final String[] args)
     {
         final int start = Integer.parseInt(args[0]);
         final int end = Integer.parseInt(args[1]);
+
         final List<Integer> happy = new ArrayList<Integer>();
         for (int i = start; i <= end; i++)
         {
@@ -56,7 +60,7 @@ public class Q33114502
             }
             else
             {
-                happy.add(-1);
+                happy.add(NOT_HAPPY);
             }
         }
         final StringBuilder sb = new StringBuilder(60);
@@ -64,9 +68,9 @@ public class Q33114502
         while (ii.hasNext())
         {
             final int i = ii.next();
-            if (i == -1) { sb.append("."); }
+            if (i == NOT_HAPPY) { sb.append("."); }
             else { sb.append(String.format("%d", i)); }
-            if (sb.length() >= 50)
+            if (sb.length() >= LINE_LENGTH)
             {
                 System.out.println(sb.toString());
                 sb.setLength(0);
