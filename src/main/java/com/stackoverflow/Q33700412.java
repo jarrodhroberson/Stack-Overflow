@@ -5,6 +5,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 import com.vertigrated.FormattedRuntimeException;
 
 public class Q33700412
@@ -52,8 +54,10 @@ public class Q33700412
         es.shutdown();
     }
 
+    @ThreadSafe
     public static final class Storage
     {
+        /* AtomicInteger is used so that it can be marked mutable and final at the same time */
         private final AtomicInteger currentCapacity;
         private final int maxCapacity;
 
