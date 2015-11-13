@@ -25,7 +25,7 @@ public class Q33700412
                 @Override
                 public void run()
                 {
-                    while (true)
+                    while (!es.isShutdown())
                     {
                         /* this if/else block is NOT thread safe, I did this on purpose
                            the state can change between s.remainingCapacity() and
@@ -46,12 +46,16 @@ public class Q33700412
                             System.out.println();
                         }
                         try { Thread.sleep(r.nextInt(5000)); }
-                        catch (InterruptedException e) { throw new RuntimeException(e); }
+                        catch (InterruptedException e) { System.out.println("Done!"); }
                     }
                 }
             });
         }
-        try { es.awaitTermination(1, TimeUnit.MINUTES); es.shutdownNow(); }
+        try
+        {
+            Thread.sleep(TimeUnit.MINUTES.toMillis(1));
+            es.shutdown();
+        }
         catch (InterruptedException e) { throw new RuntimeException(e); }
     }
 
