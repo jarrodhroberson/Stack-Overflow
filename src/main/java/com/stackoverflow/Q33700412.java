@@ -65,7 +65,7 @@ public class Q33700412
 
         public void increase(final int q)
         {
-            synchronized (this)
+            synchronized (this.currentCapacity)
             {
                 if (this.currentCapacity.get() < this.maxCapacity)
                 {
@@ -82,7 +82,7 @@ public class Q33700412
 
         public void decrease(final int q)
         {
-            synchronized (this)
+            synchronized (this.currentCapacity)
             {
                 if (this.currentCapacity.get() - q >= 0)
                 {
