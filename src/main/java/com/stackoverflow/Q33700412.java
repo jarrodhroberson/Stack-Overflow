@@ -51,8 +51,7 @@ public class Q33700412
                 }
             });
         }
-        es.shutdown();
-        try { es.awaitTermination(1, TimeUnit.MINUTES); }
+        try { es.awaitTermination(1, TimeUnit.MINUTES); es.shutdownNow(); }
         catch (InterruptedException e) { throw new RuntimeException(e); }
     }
 
