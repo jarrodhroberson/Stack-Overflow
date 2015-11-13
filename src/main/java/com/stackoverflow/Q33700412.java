@@ -46,7 +46,7 @@ public class Q33700412
                             System.out.println();
                         }
                         try { Thread.sleep(r.nextInt(5000)); }
-                        catch (InterruptedException e) { System.out.println("Done!"); }
+                        catch (InterruptedException e) { throw new RuntimeException(e); }
                     }
                 }
             });
@@ -62,7 +62,7 @@ public class Q33700412
     @ThreadSafe
     public static final class Storage
     {
-        /* AtomicInteger is used so that it can be marked mutable and final at the same time */
+        /* AtomicInteger is used so that it can be mutable and final at the same time */
         private final AtomicInteger currentCapacity;
         private final int maxCapacity;
 
