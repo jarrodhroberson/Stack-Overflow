@@ -25,6 +25,12 @@ public class Q33700412
                 {
                     while (true)
                     {
+                        /* this if/else block is NOT thread safe, I did this on purpose
+                           the state can change between s.remainingCapacity() and
+                           the call to s.increase/s.decrease.
+                           This is ok, because the Storage object is internally consistent.
+                           This thread might fail if this happens, but that is all.
+                        */
                         if (s.remainingCapacity() > 0)
                         {
                             if (r.nextBoolean()) { s.increase(r.nextInt(10)); }
