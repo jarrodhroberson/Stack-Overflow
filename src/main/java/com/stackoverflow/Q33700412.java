@@ -3,8 +3,8 @@ package com.stackoverflow;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.vertigrated.FormattedRuntimeException;
@@ -52,6 +52,8 @@ public class Q33700412
             });
         }
         es.shutdown();
+        try { es.awaitTermination(1, TimeUnit.MINUTES); }
+        catch (InterruptedException e) { throw new RuntimeException(e); }
     }
 
     @ThreadSafe
