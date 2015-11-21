@@ -1,7 +1,6 @@
 package com.stackoverflow;
 
 import com.google.common.base.Function;
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.io.ByteStreams;
 
@@ -15,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Q33846584
 {
@@ -25,12 +25,12 @@ public class Q33846584
         {
             @Nullable @Override public Path apply(@Nullable String input)
             {
-                return Paths.get(Preconditions.checkNotNull(input));
+                return Paths.get(checkNotNull(input));
             }
         });
 
         final Path destination = paths.get(0);
-        try (OutputStream fos = new FileOutputStream(destination.toFile()))
+        try (final OutputStream fos = new FileOutputStream(destination.toFile()))
         {
             for (final Path p : paths.subList(1, paths.size() - 1))
             {
