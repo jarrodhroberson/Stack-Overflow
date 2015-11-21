@@ -32,7 +32,7 @@ public class Q33846584
         final Path destination = paths.get(0);
         try (final OutputStream fos = new FileOutputStream(destination.toFile()))
         {
-            for (final Path p : paths.subList(1, paths.size() - 1))
+            for (final Path p : paths.subList(1, paths.size()))
             {
                 if (p.toFile().exists())
                 {
@@ -43,7 +43,7 @@ public class Q33846584
                 }
                 else
                 {
-                    System.out.format("%s does not exist skipping!", p.toAbsolutePath());
+                    System.err.format("%s does not exist skipping!", p.toAbsolutePath());
                     System.err.println();
                 }
             }
