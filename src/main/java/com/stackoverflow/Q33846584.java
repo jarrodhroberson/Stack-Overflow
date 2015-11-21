@@ -36,15 +36,14 @@ public class Q33846584
             {
                 if (p.toFile().exists())
                 {
-                    System.out.format("Reading %s", p.toAbsolutePath());
+                    System.out.format("Reading %s and writing to %s", p.toAbsolutePath(), destination.toAbsolutePath());
                     final FileInputStream fis = new FileInputStream(p.toFile());
-                    System.out.format(" writing to %s", destination.toAbsolutePath());
                     ByteStreams.copy(fis, fos);
                     System.out.println();
                 }
                 else
                 {
-                    System.err.format("%s does not exist skipping", p.toAbsolutePath());
+                    System.err.format("%s does not exist skipping!", p.toAbsolutePath());
                     System.err.println();
                 }
             }
