@@ -34,11 +34,19 @@ public class Q33846584
         {
             for (final Path p : paths.subList(1, paths.size() - 1))
             {
-                System.out.format("Reading %s", p.toAbsolutePath());
-                final FileInputStream fis = new FileInputStream(p.toFile());
-                System.out.format(" writing to %s", destination.toAbsolutePath());
-                ByteStreams.copy(fis,fos);
-                System.out.println();
+                if (p.toFile().exists())
+                {
+                    System.out.format("Reading %s", p.toAbsolutePath());
+                    final FileInputStream fis = new FileInputStream(p.toFile());
+                    System.out.format(" writing to %s", destination.toAbsolutePath());
+                    ByteStreams.copy(fis, fos);
+                    System.out.println();
+                }
+                else
+                {
+                    System.err.format("%s does not exist skipping", p.toAbsolutePath());
+                    System.err.println();
+                }
             }
         }
     }
