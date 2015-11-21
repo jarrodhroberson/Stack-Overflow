@@ -20,7 +20,7 @@ public class Q33846584
 {
     public static void main(final String[] args) throws Exception
     {
-        checkArgument(args.length < 3, "You must supply at least 3 file paths as argumens dest, src, src, ...");
+        checkArgument(args.length > 2, "You must supply at least 3 file paths as argumens dest, src, src, ...");
         final List<Path> paths = Lists.transform(Arrays.asList(args), new Function<String, Path>()
         {
             @Nullable @Override public Path apply(@Nullable String input)
@@ -43,7 +43,7 @@ public class Q33846584
                 }
                 else
                 {
-                    System.err.format("%s does not exist skipping!", p.toAbsolutePath());
+                    System.out.format("%s does not exist skipping!", p.toAbsolutePath());
                     System.err.println();
                 }
             }
