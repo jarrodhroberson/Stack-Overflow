@@ -25,18 +25,18 @@ public class Q34081279
             {
                 if (words[column].equals(table[row][column])) { count++; }
             }
-            if (count >= A_GRADE) {System.out.format("%d = A", count);}
-            else if (B_GRADE <= count && count < A_GRADE) {System.out.format("%d = B", count);}
-            else if (C_GRADE <= count && count < B_GRADE) {System.out.format("%d = C", count);}
-            else if (D_GRADE <= count && count < C_GRADE) {System.out.format("%d = D", count);}
-            else {System.out.format("%d = F", count);}
+            if (count >= A_GRADE) { System.out.format("%d = A", count); }
+            else if (B_GRADE <= count && count < A_GRADE) { System.out.format("%d = B", count); }
+            else if (C_GRADE <= count && count < B_GRADE) { System.out.format("%d = C", count); }
+            else if (D_GRADE <= count && count < C_GRADE) { System.out.format("%d = D", count); }
+            else { System.out.format("%d = F", count); }
             System.out.println();
         }
 
-        System.out.print(String.format("Question A %d", markA));
-        System.out.print(String.format("Question B %d", markB));
-        System.out.print(String.format("Question C %d", markC));
-        System.out.print(String.format("Question D %d", markD));
-        System.out.print(String.format("Question F %d", markF));
+        System.out.println(String.format("Question A %d", markA));
+        System.out.println(String.format("Question B %d", markB));
+        System.out.println(String.format("Question C %d", markC));
+        System.out.println(String.format("Question D %d", markD));
+        System.out.println(String.format("Question F %d", markF));
     }
 }
