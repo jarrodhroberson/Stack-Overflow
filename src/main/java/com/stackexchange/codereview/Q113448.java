@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 public class Q113448
 {
     public static void main(@Nonnull final String[] args)
@@ -26,21 +28,44 @@ public class Q113448
             }
         }).build();
 
-        class PathMatcherLogger
+        class Logger
         {
             @Subscribe
             public void log(@Nonnull final Path path) {System.out.println(path.toAbsolutePath().toString());}
         }
 
         final ImmutableSortedSet.Builder<Path> issb = ImmutableSortedSet.naturalOrder();
-        class PathMatcherSetBuilder
+        class SetBuilder
         {
             @Subscribe
             public void add(@Nonnull final Path path) { issb.add(path); }
         }
 
-        pc.register(new PathMatcherLogger());
-        pc.register(new PathMatcherSetBuilder());
+        /* This is here as an example on how to plug in actions. It is not used in the example for obvious reasons. */
+        class CopyToDirectory
+        {
+            private final Path destination;
+
+            public CopyToDirectory(@Nonnull final Path destination)
+            {
+                checkArgument(destination.toFile().isDirectory(), "%s must be a Directory!");
+                this.destination = destination;
+            }
+
+            @Subscribe
+            public void copy(@Nonnull final Path path)
+            {
+                try { Files.copy(path, destination, StandardCopyOption.REPLACE_EXISTING); }
+                catch (final IOException e) { throw new RuntimeException(e); }
+            }
+
+        }
+
+        pc.register(new Logger());
+        pc.register(new SetBuilder());
+        /* commented out intentionally
+        pc.register(new CopyToDirectory(Paths.get("/some/where/useful")));
+        */
         System.out.println("In the order they are encountered in:");
         pc.run();
         System.out.println("===============================");
