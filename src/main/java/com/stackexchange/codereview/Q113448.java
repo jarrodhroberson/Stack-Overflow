@@ -107,7 +107,7 @@ public class Q113448
         private PathCollector(@Nonnull final Path root, @Nonnull final Map<Fields, Object> config)
         {
             this.eventBus = new EventBus("Path Collector");
-            this.root = root;
+            this.root = root.toFile().isDirectory() ? root : root.getParent();
             this.config = config;
         }
 
