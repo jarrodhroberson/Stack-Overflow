@@ -34,11 +34,12 @@ public class Q113448
             public void log(@Nonnull final Path path) {System.out.println(path.toAbsolutePath().toString());}
         }
 
-        final ImmutableSortedSet.Builder<Path> issb = ImmutableSortedSet.naturalOrder();
         class SetBuilder
         {
+            private final ImmutableSortedSet.Builder<Path> issb = ImmutableSortedSet.naturalOrder();
             @Subscribe
             public void add(@Nonnull final Path path) { issb.add(path); }
+            public Set<Path> get() { return issb.build(); }
         }
 
         /* This is here as an example on how to plug in actions. It is not used in the example for obvious reasons. */
@@ -62,7 +63,8 @@ public class Q113448
         }
 
         pc.register(new Logger());
-        pc.register(new SetBuilder());
+        final SetBuilder setBuilder = new SetBuilder();
+        pc.register(setBuilder);
         /* commented out intentionally
         pc.register(new CopyToDirectory(Paths.get("/some/where/useful")));
         */
@@ -70,7 +72,7 @@ public class Q113448
         pc.run();
         System.out.println("===============================");
         System.out.println("In sorted order from a SortedSet");
-        final Set<Path> paths = issb.build();
+        final Set<Path> paths = setBuilder.get();
         final Iterator<Path> iterator = paths.iterator();
         for (int i = 0; iterator.hasNext(); i++)
         {
