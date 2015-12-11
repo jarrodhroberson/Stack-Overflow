@@ -7,6 +7,12 @@ public class Q34081279
     final static int C_GRADE = 14;
     final static int D_GRADE = 12;
 
+    private static boolean isA(final int count) { return count >= A_GRADE; }
+    private static boolean isB(final int count) { return B_GRADE <= count && count < A_GRADE; }
+    private static boolean isC(final int count) { return C_GRADE <= count && count < B_GRADE; }
+    private static boolean isD(final int count) { return D_GRADE <= count && count < C_GRADE; }
+    private static boolean isF(final int count) { return count < D_GRADE; }
+
     public static void main(final String[] args)
     {
         final String[] words = new String[]{}; /* this is just a placeholer, not provided in question */
