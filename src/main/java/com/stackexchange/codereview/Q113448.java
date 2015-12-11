@@ -176,7 +176,7 @@ public class Q113448
             };
         }
 
-        public interface Builder
+        interface Builder
         {
             public Builder pathMatcher(@Nonnull final PathMatcher pathMatcher);
 
