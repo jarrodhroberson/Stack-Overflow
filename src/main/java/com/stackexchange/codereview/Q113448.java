@@ -7,6 +7,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -171,9 +172,13 @@ public class Q113448
 
                 @Override public PathCollector build()
                 {
-                    final Map<Fields,Object> merged = Maps.newHashMap(defaults);
-                    merged.putAll(imb.build());
-                    return new PathCollector(root, ImmutableMap.copyOf(merged));
+                    return new PathCollector(root, ImmutableMap.copyOf(Maps.transformEntries(defaults, new Maps.EntryTransformer<Fields, Object, Object>() {
+                        final Map<Fields,Object> custom = imb.build();
+                        @Override public Object transformEntry(@Nullable final Fields key, @Nullable final Object value)
+                        {
+                            return custom.containsKey(key) ? custom.get(key) : value;
+                        }
+                    })));
                 }
             };
         }
