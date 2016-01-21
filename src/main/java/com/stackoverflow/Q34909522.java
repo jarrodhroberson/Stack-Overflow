@@ -1,9 +1,11 @@
 package com.stackoverflow;
 
+import com.google.common.base.Predicate;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.google.common.base.Predicate;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Q34909522
 {
@@ -48,6 +50,39 @@ public class Q34909522
                     System.out.format("%d is not a valid day of the month for %s (%d)", i, m, m.daysInMonth);
                     System.out.println();
                 }
+            }
+        }
+    }
+
+    /**
+     * Leap Year Example
+     */
+    private static class YearMonth implements Predicate<Integer>
+    {
+        private final int year;
+        private final Month month;
+
+        public YearMonth(final int year, @Nonnull final Month month)
+        {
+            this.year = year;
+            this.month = month;
+        }
+
+        private boolean isLeapYear()
+        {
+            return this.year % 4 == 0 && (this.year % 100 != 0 || this.year % 400 == 0);
+        }
+
+        @Override
+        public boolean apply(@Nullable final Integer integer)
+        {
+            if (this.isLeapYear() && Month.FEBRUARY.equals(this.month))
+            {
+                return this.month.apply(checkNotNull(integer) - 1);
+            }
+            else
+            {
+                return this.month.apply(integer);
             }
         }
     }
