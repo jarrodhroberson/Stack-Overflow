@@ -4,9 +4,9 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.reflect.TypeToken;
-import com.google.inject.Provider;
 
 import javax.annotation.Nonnull;
+import javax.inject.Provider;
 import java.util.List;
 import java.util.Map;
 
