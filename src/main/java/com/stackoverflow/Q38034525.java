@@ -11,10 +11,10 @@ public class Q38034525
         rc.model = "Corvette Stringray";
         rc.topSpeed = 195;
 
-        System.out.println(new ObjectMapper().writeValueAsString(rc));
         final ObjectMapper om = new ObjectMapper();
-        om.addMixIn(RaceCar.class, RestrictedRaceCar.class);
         System.out.println(om.writeValueAsString(rc));
+        final ObjectMapper om2 = om.copy().addMixIn(RaceCar.class, RestrictedRaceCar.class);
+        System.out.println(om2.writeValueAsString(rc));
 
     }
 
