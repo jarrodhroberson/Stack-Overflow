@@ -8,6 +8,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
+import static java.lang.String.format;
+
 public class Q44147360
 {
     private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new NamedThreadFactory(new Function<String, String>()
@@ -17,7 +19,7 @@ public class Q44147360
         @Override
         public String apply(String s)
         {
-            return String.format("A%03d", this.ordinal.incrementAndGet());
+            return format("A%03d", this.ordinal.incrementAndGet());
         }
     }));
 
@@ -52,7 +54,7 @@ public class Q44147360
             for (int ii = 1; ii <= 500; ii++)
             {
                 SYNC_COUNT.incrementAndGet();
-                System.out.println(Thread.currentThread().getName() + " : is at " + ii + " with SYNC_COUNT=" + SYNC_COUNT);
+                System.out.println(format("%s : is at %03d with syncCount = %04d",Thread.currentThread().getName(), ii, SYNC_COUNT.get()));
                 try
                 {
                     Thread.sleep(1);
@@ -82,7 +84,7 @@ public class Q44147360
         {
             e.printStackTrace(System.err);
         }
-        System.out.println("ShareCount=" + SHARE_COUNT);
-        System.out.println("Sync Count=" + SYNC_COUNT);
+        System.out.println(format("Share Count = %03d", SHARE_COUNT));
+        System.out.println(format("Sync Count  = %03d", SYNC_COUNT.get()));
     }
 }
