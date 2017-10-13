@@ -5,6 +5,8 @@ import com.google.common.collect.ImmutableList;
 import javafx.util.Pair;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -16,18 +18,19 @@ public class StreamVsDecorator
     {
         final Double ZERO = 0.0d;
         final Double ONE = 1.0d;
-        final Iterable<Double> probes = ImmutableList.of();
-
-        transform(limit(filter(probes, input -> ZERO.compareTo(checkNotNull(input)) == 0 || ONE.compareTo(input) == 0), 10), new Function<Double, Pair<Integer, Double>>()
+        final Iterable<Double> probes = ImmutableList.copyOf(new Random().doubles(1000, 0.0d, 1.0d).iterator());
+        //probes.forEach(probe -> System.out.printf("Probe #%f\n",probe));
+        transform(limit(filter(probes, probe -> ZERO.compareTo(probe) < 0 || ONE.compareTo(probe) > 0), 10), new Function<Double, Pair<Integer, Double>>()
         {
             final AtomicInteger index = new AtomicInteger(0);
 
             @Nonnull
             @Override
-            public Pair<Integer, Double> apply(@Nonnull final Double input)
+            public Pair<Integer, Double> apply(@Nonnull final Double probe)
             {
-                return new Pair<>(index.incrementAndGet(), input);
+                System.out.printf("Probe #%f - %s \n",probe, ZERO.compareTo(probe) == 0 || ONE.compareTo(probe) == 0);
+                return new Pair<>(index.incrementAndGet(), probe);
             }
-        }).forEach(idp -> System.out.printf("Probe #%d: %f", idp.getKey(), idp.getValue() * 100.0d));
+        }).forEach(idp -> System.out.printf("Probe #%d: %f\n", idp.getKey(), idp.getValue() * 100.0d));
     }
 }
