@@ -17,7 +17,7 @@ public class StreamVsDecorator
         final Double ZERO = 0.0d;
         final Double ONE = 1.0d;
         final Iterable<Double> probes = ImmutableList.copyOf(new Random().doubles(1000, 0.0d, 1.0d).iterator());
-        //probes.forEach(probe -> System.out.printf("Probe #%f\n",probe));
+
         transform(limit(filter(probes, probe -> ZERO.compareTo(probe) < 0 || ONE.compareTo(probe) > 0), 10), new Function<Double, Pair<Integer, Double>>()
         {
             final AtomicInteger index = new AtomicInteger(0);
