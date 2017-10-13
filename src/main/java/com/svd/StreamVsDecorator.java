@@ -5,11 +5,9 @@ import com.google.common.collect.ImmutableList;
 import javafx.util.Pair;
 
 import javax.annotation.Nonnull;
-import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Iterables.*;
 
 public class StreamVsDecorator
@@ -28,7 +26,6 @@ public class StreamVsDecorator
             @Override
             public Pair<Integer, Double> apply(@Nonnull final Double probe)
             {
-                System.out.printf("Probe #%f - %s \n",probe, ZERO.compareTo(probe) == 0 || ONE.compareTo(probe) == 0);
                 return new Pair<>(index.incrementAndGet(), probe);
             }
         }).forEach(idp -> System.out.printf("Probe #%d: %f\n", idp.getKey(), idp.getValue() * 100.0d));
