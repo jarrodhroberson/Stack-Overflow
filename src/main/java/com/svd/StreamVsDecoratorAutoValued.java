@@ -13,16 +13,16 @@ import static com.google.common.collect.Iterables.*;
 public class StreamVsDecoratorAutoValued
 {
     @AutoValue
-    public static abstract class IndexedDouble
+    public static abstract class IndexedProbe
     {
-        static IndexedDouble create(@Nonnull final Integer index, @Nonnull final Double value)
+        static IndexedProbe create(@Nonnull final Integer index, @Nonnull final Double value)
         {
-            return new AutoValue_StreamVsDecorator_IndexedDouble(index, value);
+            return new AutoValue_StreamVsDecorator_IndexedProbe(index, value);
         }
 
         abstract Integer index();
 
-        abstract Double value();
+        abstract Double probe();
     }
 
 
@@ -32,16 +32,16 @@ public class StreamVsDecoratorAutoValued
         final Double ONE = 1.0d;
         final Iterable<Double> probes = ImmutableList.copyOf(new Random().doubles(1000, 0.0d, 1.0d).iterator());
 
-        transform(limit(filter(probes, probe -> ZERO.compareTo(probe) < 0 || ONE.compareTo(probe) > 0), 10), new Function<Double, IndexedDouble>()
+        transform(limit(filter(probes, probe -> ZERO.compareTo(probe) < 0 || ONE.compareTo(probe) > 0), 10), new Function<Double, IndexedProbe>()
         {
             final AtomicInteger index = new AtomicInteger(0);
 
             @Nonnull
             @Override
-            public IndexedDouble apply(@Nonnull final Double probe)
+            public IndexedProbe apply(@Nonnull final Double probe)
             {
-                return IndexedDouble.create(index.incrementAndGet(), probe);
+                return IndexedProbe.create(index.incrementAndGet(), probe);
             }
-        }).forEach(idp -> System.out.printf("Probe #%d: %f\n", idp.index(), idp.value() * 100.0d));
+        }).forEach(idp -> System.out.printf("Probe #%d: %f\n", idp.index(), idp.probe() * 100.0d));
     }
 }
