@@ -17,7 +17,7 @@ public class StreamVsDecoratorAutoValued
     {
         static IndexedProbe create(@Nonnull final Integer index, @Nonnull final Double value)
         {
-            return new AutoValue_StreamVsDecorator_IndexedProbe(index, value);
+            return new AutoValue_StreamVsDecoratorAutoValued_IndexedProbe(index, value);
         }
 
         abstract Integer index();
