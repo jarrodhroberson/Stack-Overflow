@@ -1,4 +1,6 @@
-##What is this?
+> This repository has been archived as I no longer participate in StackOverflow for various reasons that were well documented on meta.stackoverflow.com
+
+## What is this?
 
 [![Build Status](https://travis-ci.org/jarrodhroberson/Stack-Overflow.svg?branch=master)](https://travis-ci.org/jarrodhroberson/Stack-Overflow)
 
